@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tutorial JSON</title>
+</head>
+<body>
+<ul id="gente"></ul>
+<br>
+<ul id="gentuza"></ul>
+
+	<script type="text/javascript">
+//Objeto simple	////////////////////////////////
+		var persona ={
+			"nombre" : "Josep",
+			"apellido": "Monzó",
+			"edad": 22,
+			"nickname": "MazerCat"
+			
+		};
+
+		console.log(persona.nombre);
+
+//Objeto con array/////////////////////////
+
+		var personas = [
+			{"nombre":"Josep", "nickname":"MazerCat"},
+			{"nombre":"Belen", "nickname":"Belenxu"}
+
+		];
+
+		console.log(personas[1].nickname);
+
+//Objeto con array múltiple usando for//////////////////
+
+		var gente =[
+		{"nombre":"Josep", "nickname":"MazerCat"},
+		{"nombre":"Belen", "nickname":"Belenxu"},
+		{"nombre":"Rafa", "nickname":"kelko13"},
+		{"nombre":"Silvia", "nickname":"Silvipd"},
+		{"nombre":"Alejandro", "nickname":"Basilio Cerilla"},
+		{"nombre":"Paco", "nickname":"Theseo"}
+		]
+
+		for (var i = 0; i < gente.length; i++) {
+			console.log(gente[i]);
+		}
+
+
+//Objeto con array múltiple usando for y sacando listado de nombre por la web///////////
+
+		var gentuza =[
+		{"nombre":"Josep", "nickname":"MazerCat"},
+		{"nombre":"Belen", "nickname":"Belenxu"},
+		{"nombre":"Rafa", "nickname":"kelko13"},
+		{"nombre":"Silvia", "nickname":"Silvipd"},
+		{"nombre":"Alejandro", "nickname":"Basilio Cerilla"},
+		{"nombre":"Paco", "nickname":"Theseo"}
+		]
+
+		var salida = "";
+
+		for (var i = 0; i < gentuza.length; i++) {
+			salida += "<li>"+ gentuza[i].nombre + "</li>";
+		}
+
+		document.getElementById("gentuza").innerHTML = "Aquí irá el listado de la gente:"+"<br>"+salida;	
+
+// Vamos a hacer una peticion al servidor para traer el objeto gente ///////////////////
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+		var respuesta = JSON.parse(xhttp.responseText);
+		var gente = respuesta.gente;
+
+		var salida = "";
+
+		for (var i = 0; i < gente.length; i++) {
+			salida += "<li>"+ gente[i].nombre + "</li>";
+		}
+
+		document.getElementById("gente").innerHTML = "Aquí irá el listado de la gente del archivo json:"+"<br>"+salida;
+		}
+	};
+	xhttp.open("GET", "gente.json", true);
+	xhttp.send();
+	</script>
+	</body>
+	</html>
